@@ -1,0 +1,24 @@
+.slider .axis {
+    -fx-tick-label-fill: white;
+}
+
+.check-box .box {
+    -fx-background-color: #424242;
+}
+
+.check-box:selected .mark {
+    -fx-background-color: white;
+    -fx-shape: "M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z";
+}
+
+.radio-button .radio {
+    -fx-background-color: #424242;
+}
+
+.radio-button:selected .dot {
+    -fx-background-color: white;
+}
+
+.button {
+    -fx-background-color: #424242;
+}

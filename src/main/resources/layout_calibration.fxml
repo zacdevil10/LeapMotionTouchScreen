@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<AnchorPane id="container" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.172-ea"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="uk.co.zac_h.ui.controller.CalibrationLayoutController">
+
+    <StackPane AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0"
+               AnchorPane.topAnchor="2.0">
+
+        <ImageView fitHeight="75.0" fitWidth="308.0" pickOnBounds="true" preserveRatio="true"
+                   StackPane.alignment="TOP_LEFT">
+
+            <Image url="@images/calibration_target.png"/>
+
+        </ImageView>
+
+        <ImageView fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true"
+                   StackPane.alignment="TOP_RIGHT">
+
+            <Image url="@images/calibration_target.png"/>
+
+        </ImageView>
+
+        <ImageView fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true"
+                   StackPane.alignment="BOTTOM_CENTER">
+
+            <Image url="@images/calibration_target.png"/>
+
+        </ImageView>
+
+        <Group StackPane.alignment="CENTER">
+            <StackPane prefHeight="204.0" prefWidth="521.0">
+
+                <Label contentDisplay="TOP" text="Calibration" textFill="#424242" StackPane.alignment="TOP_CENTER">
+
+                    <font>
+                        <Font size="34.0"/>
+                    </font>
+
+                </Label>
+
+                <Button fx:id="end_calibration_button" alignment="CENTER" mnemonicParsing="false" onAction="#close"
+                        style="-fx-background-color: #546e7a;" text="Cancel" textFill="WHITE"
+                        StackPane.alignment="BOTTOM_CENTER"/>
+
+                <Label alignment="CENTER" contentDisplay="CENTER"
+                       text="Place a finger on a target point and press [KEY] &#13; Repeat for all targets"
+                       textAlignment="CENTER" textFill="#424242" StackPane.alignment="CENTER">
+
+                    <font>
+                        <Font size="24.0"/>
+                    </font>
+
+                </Label>
+
+            </StackPane>
+
+        </Group>
+
+    </StackPane>
+
+</AnchorPane>

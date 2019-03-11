@@ -1,19 +1,25 @@
 package uk.co.zac_h.ui.controller;
 
+import com.leapmotion.leap.Controller;
+import com.leapmotion.leap.Listener;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import uk.co.zac_h.ui.CalibrationOverlay;
+import uk.co.zac_h.utils.LeapController;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class MainLayoutController implements Initializable {
+public class MainLayoutController extends Listener implements Initializable {
 
     @FXML public ImageView close_button;
+    @FXML public Label leap_status_text;
     @FXML private RadioButton touch_click_mode_radio;
     @FXML private RadioButton two_finger_click_mode_radio;
 
@@ -22,6 +28,8 @@ public class MainLayoutController implements Initializable {
 
     @FXML private RadioButton tray_minimize_radio;
     @FXML private RadioButton task_bar_minimize_radio;
+
+    private LeapController leapController;
 
     public MainLayoutController() {
 
@@ -45,6 +53,11 @@ public class MainLayoutController implements Initializable {
         close_button.setOnMouseClicked(event -> System.exit(0));
     }
 
+    public void setLeapController(LeapController leapController) {
+        this.leapController = leapController;
+        leapController.setControllerListener(this);
+    }
+
     @FXML
     private void entered(MouseEvent event) {
         ((ImageView) event.getTarget()).setOpacity(1.0);
@@ -58,7 +71,16 @@ public class MainLayoutController implements Initializable {
     @FXML
     private void startCalibration() throws Exception {
         CalibrationOverlay calibrationOverlay = new CalibrationOverlay();
-        calibrationOverlay.start();
+        calibrationOverlay.start(leapController);
     }
 
+    @Override
+    public void onConnect(Controller controller) {
+        Platform.runLater(() -> leap_status_text.setText("Leap Motion status: Connected"));
+    }
+
+    @Override
+    public void onDisconnect(Controller controller) {
+        Platform.runLater(() -> leap_status_text.setText("Leap Motion status: Disconnected"));
+    }
 }

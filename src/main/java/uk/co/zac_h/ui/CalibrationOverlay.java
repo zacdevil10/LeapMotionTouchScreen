@@ -6,16 +6,23 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import uk.co.zac_h.ui.controller.CalibrationLayoutController;
+import uk.co.zac_h.utils.LeapController;
 
 import java.awt.*;
-import java.util.Objects;
 
 public class CalibrationOverlay {
 
-    public void start() throws Exception {
+    private LeapController leapController;
+
+    public void start(LeapController leapController) throws Exception {
+        this.leapController = leapController;
+
+        FXMLLoader calibration = new FXMLLoader(getClass().getClassLoader().getResource("layout_calibration.fxml"));
+
         Stage secondaryStage = new Stage();
         GraphicsDevice graphicsDevice = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("layout_calibration.fxml")));
+        Parent root = calibration.load();
         Scene scene = new Scene(root, Color.TRANSPARENT);
 
         secondaryStage.setScene(scene);
@@ -25,5 +32,9 @@ public class CalibrationOverlay {
         secondaryStage.setFullScreen(true);
         secondaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         secondaryStage.show();
+
+        CalibrationLayoutController calibrationLayoutController = calibration.getController();
+
+        calibrationLayoutController.setLeapController(leapController);
     }
 }

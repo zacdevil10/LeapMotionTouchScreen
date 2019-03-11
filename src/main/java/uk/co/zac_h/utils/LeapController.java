@@ -2,6 +2,7 @@ package uk.co.zac_h.utils;
 
 import com.leapmotion.leap.Controller;
 import com.leapmotion.leap.Frame;
+import com.leapmotion.leap.Listener;
 import com.leapmotion.leap.Vector;
 
 public class LeapController {
@@ -20,10 +21,14 @@ public class LeapController {
     }
 
     public Vector getTouchFingerPosition() {
-        return controller.frame().hands().get(1).fingers().frontmost().tipPosition();
+        return controller.frame().pointables().frontmost().tipPosition();
     }
 
     public boolean isConnected() {
         return controller.isConnected();
+    }
+
+    public void setControllerListener(Listener listener) {
+        controller.addListener(listener);
     }
 }

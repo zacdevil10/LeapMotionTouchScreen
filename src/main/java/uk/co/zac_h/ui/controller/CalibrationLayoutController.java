@@ -11,7 +11,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import uk.co.zac_h.utils.LeapController;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.net.URL;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class CalibrationLayoutController implements Initializable {
@@ -43,18 +47,50 @@ public class CalibrationLayoutController implements Initializable {
     }
 
     public void calibration_confirm(KeyEvent keyEvent) {
+        Properties properties = new Properties();
         if (keyEvent.getCode() == KeyCode.ENTER) {
             switch (count) {
                 case 0:
-                    topLeftPoint = leapController.getTouchFingerPosition();
+                    topLeftPoint = leapController.getTouchPointablePosition();
                     count++;
                     break;
                 case 1:
-                    topRightPoint = leapController.getTouchFingerPosition();
+                    topRightPoint = leapController.getTouchPointablePosition();
                     count++;
                     break;
                 case 2:
-                    bottomCenterPoint = leapController.getTouchFingerPosition();
+                    bottomCenterPoint = leapController.getTouchPointablePosition();
+                    properties.setProperty("left_x", String.valueOf(topLeftPoint.getX()));
+                    properties.setProperty("left_y", String.valueOf(topLeftPoint.getY()));
+                    properties.setProperty("left_z", String.valueOf(topLeftPoint.getZ()));
+
+                    properties.setProperty("right_x", String.valueOf(topRightPoint.getX()));
+                    properties.setProperty("right_y", String.valueOf(topRightPoint.getY()));
+                    properties.setProperty("right_z", String.valueOf(topRightPoint.getZ()));
+
+                    properties.setProperty("bottom_x", String.valueOf(bottomCenterPoint.getX()));
+                    properties.setProperty("bottom_y", String.valueOf(bottomCenterPoint.getY()));
+                    properties.setProperty("bottom_z", String.valueOf(bottomCenterPoint.getZ()));
+
+                    OutputStream outputStream = null;
+
+                    try {
+                        outputStream = new FileOutputStream("coordinates.properties");
+
+                        properties.store(outputStream, null);
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } finally {
+                        if (outputStream != null) {
+                            try {
+                                outputStream.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
                     System.out.println("Left: " + topLeftPoint + "\nRight: " + topRightPoint + "\nBottom: " + bottomCenterPoint);
                     count = 0;
                     break;

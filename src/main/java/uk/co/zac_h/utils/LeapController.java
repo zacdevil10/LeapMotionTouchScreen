@@ -4,7 +4,7 @@ import com.leapmotion.leap.*;
 
 public class LeapController {
 
-    private Controller controller;
+    private final Controller controller;
     Frame currentFrame;
     private Frame previousFrame;
 

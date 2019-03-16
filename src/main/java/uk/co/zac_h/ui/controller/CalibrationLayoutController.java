@@ -90,8 +90,6 @@ public class CalibrationLayoutController implements Initializable {
                             }
                         }
                     }
-
-                    System.out.println("Left: " + topLeftPoint + "\nRight: " + topRightPoint + "\nBottom: " + bottomCenterPoint);
                     count = 0;
                     break;
             }

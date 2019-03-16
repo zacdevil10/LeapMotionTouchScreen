@@ -6,32 +6,25 @@ import java.awt.*;
 import java.awt.event.InputEvent;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Properties;
 
 public class MovementThread implements Runnable {
 
-    private LeapController leapController;
+    private final LeapController leapController;
 
     public MovementThread(LeapController leapController) {
         this.leapController = leapController;
     }
 
+    @SuppressWarnings("InfiniteLoopStatement")
     @Override
     public void run() {
-        GraphicsDevice graphicsDevice = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-        ArrayList coordinates = loadCoordinates();
-        MouseController mouseController = null;
-
         try {
-            mouseController = new MouseController();
-        } catch (AWTException e) {
-            e.printStackTrace();
-        }
+            ArrayList<Vector> coordinates = loadCoordinates();
+            MouseController mouseController = new MouseController();
 
-        if (coordinates != null && mouseController != null) {
-            while (true) {
+            if (coordinates != null) while (true) {
                 leapController.setCurrentFrame();
 
                 if (!leapController.currentFrame.hands().isEmpty()) {
@@ -40,60 +33,49 @@ public class MovementThread implements Runnable {
 
                     if (position.magnitude() != 0) {
 
-                        float xScaleFactor = (position.getX() - ((Vector) coordinates.get(0)).getX()) / (((Vector) coordinates.get(1)).getX() - ((Vector) coordinates.get(0)).getX());
-                        float yScaleFactor = 1 - ((position.getY() - ((Vector) coordinates.get(2)).getY()) / (((Vector) coordinates.get(0)).getY() - ((Vector) coordinates.get(2)).getY()));
+                        float xScaleFactor = (position.getX() - coordinates.get(0).getX()) / (coordinates.get(1).getX() - coordinates.get(0).getX());
+                        float yScaleFactor = 1 - ((position.getY() - coordinates.get(2).getY()) / (coordinates.get(0).getY() - coordinates.get(2).getY()));
 
-                        int mouseX = (int) (xScaleFactor * graphicsDevice.getDisplayMode().getWidth());
-                        int mouseY = (int) (yScaleFactor * graphicsDevice.getDisplayMode().getHeight());
+                        mouseController.setMousePosition(xScaleFactor, yScaleFactor);
 
-                        mouseController.updateMousePosition(mouseX, mouseY);
-
-                        if (position.getZ() < (((Vector) coordinates.get(0)).getZ() + ((Vector) coordinates.get(1)).getZ() + ((Vector) coordinates.get(2)).getZ()) / 3) {
+                        if (position.getZ() < (coordinates.get(0).getZ() + coordinates.get(1).getZ() + coordinates.get(2).getZ()) / 3) {
                             mouseController.mousePress(InputEvent.BUTTON1_MASK);
                             mouseController.mouseRelease(InputEvent.BUTTON1_MASK);
                         }
                     }
-
                 }
             }
+        } catch (AWTException | IOException e) {
+            e.printStackTrace();
         }
     }
 
-    private ArrayList loadCoordinates() {
+    /**
+     * Get saved calibration coordinates from properties file
+     *
+     * @return Calibration coordinates array
+     * @throws IOException
+     */
+    private ArrayList<Vector> loadCoordinates() throws IOException {
         Properties properties = new Properties();
 
-        try (InputStream inputStream = new FileInputStream("coordinates.properties")) {
-            properties.load(inputStream);
+        properties.load(new FileInputStream("coordinates.properties"));
 
-            Vector vectorLeft = new Vector();
+        ArrayList<Vector> arrayList = new ArrayList<>();
+        arrayList.add(addCoordinates("left", properties));
+        arrayList.add(addCoordinates("right", properties));
+        arrayList.add(addCoordinates("bottom", properties));
 
-            vectorLeft.setX(Float.parseFloat(properties.getProperty("left_x")));
-            vectorLeft.setY(Float.parseFloat(properties.getProperty("left_y")));
-            vectorLeft.setZ(Float.parseFloat(properties.getProperty("left_z")));
+        return arrayList;
+    }
 
-            Vector vectorRight = new Vector();
+    private Vector addCoordinates(String position, Properties properties) {
+        Vector vector = new Vector();
 
-            vectorRight.setX(Float.parseFloat(properties.getProperty("right_x")));
-            vectorRight.setY(Float.parseFloat(properties.getProperty("right_y")));
-            vectorRight.setZ(Float.parseFloat(properties.getProperty("right_z")));
+        vector.setX(Float.parseFloat(properties.getProperty(position + "_x")));
+        vector.setY(Float.parseFloat(properties.getProperty(position + "_y")));
+        vector.setZ(Float.parseFloat(properties.getProperty(position + "_z")));
 
-            Vector vectorBottom = new Vector();
-
-            vectorBottom.setX(Float.parseFloat(properties.getProperty("bottom_x")));
-            vectorBottom.setY(Float.parseFloat(properties.getProperty("bottom_y")));
-            vectorBottom.setZ(Float.parseFloat(properties.getProperty("bottom_z")));
-
-            ArrayList arrayList = new ArrayList();
-            arrayList.add(vectorLeft);
-            arrayList.add(vectorRight);
-            arrayList.add(vectorBottom);
-
-            return arrayList;
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return null;
+        return vector;
     }
 }

@@ -4,6 +4,8 @@ import com.leapmotion.leap.Vector;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -21,7 +23,10 @@ import java.util.ResourceBundle;
 public class CalibrationLayoutController implements Initializable {
 
     @FXML public AnchorPane container;
-    @FXML private Button end_calibration_button;
+    @FXML public ImageView image_left_point;
+    @FXML public ImageView image_right_point;
+    @FXML public ImageView image_bottom_point;
+    @FXML public Button end_calibration_button;
 
     private int position = 0;
 
@@ -51,10 +56,16 @@ public class CalibrationLayoutController implements Initializable {
         if (keyEvent.getCode() == KeyCode.ENTER) {
             switch (position) {
                 case 0:
+                    setCurrentPointer(image_left_point, "images/calibration_target.png", false);
+                    setCurrentPointer(image_right_point, "images/calibration_target_selected.png", true);
+
                     topLeftPoint = leapController.getTouchPointablePosition();
                     position++;
                     break;
                 case 1:
+                    setCurrentPointer(image_right_point, "images/calibration_target.png", false);
+                    setCurrentPointer(image_bottom_point, "images/calibration_target_lower_selected.png", true);
+
                     topRightPoint = leapController.getTouchPointablePosition();
                     position++;
                     break;
@@ -84,6 +95,11 @@ public class CalibrationLayoutController implements Initializable {
                     break;
             }
         }
+    }
+
+    private void setCurrentPointer(ImageView image, String res, Boolean current) {
+        image.setOpacity(current ? 1.0 : 0.5);
+        image.setImage(new Image(res));
     }
 
     public void setLeapController(LeapController leapController) {

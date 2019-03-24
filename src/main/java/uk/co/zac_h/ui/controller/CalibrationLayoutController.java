@@ -23,7 +23,7 @@ public class CalibrationLayoutController implements Initializable {
     @FXML public AnchorPane container;
     @FXML private Button end_calibration_button;
 
-    private int count = 0;
+    private int position = 0;
 
     private Vector topLeftPoint;
     private Vector topRightPoint;
@@ -49,14 +49,14 @@ public class CalibrationLayoutController implements Initializable {
     public void calibration_confirm(KeyEvent keyEvent) {
         Properties properties = new Properties();
         if (keyEvent.getCode() == KeyCode.ENTER) {
-            switch (count) {
+            switch (position) {
                 case 0:
                     topLeftPoint = leapController.getTouchPointablePosition();
-                    count++;
+                    position++;
                     break;
                 case 1:
                     topRightPoint = leapController.getTouchPointablePosition();
-                    count++;
+                    position++;
                     break;
                 case 2:
                     bottomCenterPoint = leapController.getTouchPointablePosition();
@@ -72,25 +72,15 @@ public class CalibrationLayoutController implements Initializable {
                     properties.setProperty("bottom_y", String.valueOf(bottomCenterPoint.getY()));
                     properties.setProperty("bottom_z", String.valueOf(bottomCenterPoint.getZ()));
 
-                    OutputStream outputStream = null;
-
-                    try {
-                        outputStream = new FileOutputStream("coordinates.properties");
+                    try (OutputStream outputStream = new FileOutputStream("coordinates.properties")){
 
                         properties.store(outputStream, null);
 
                     } catch (IOException e) {
                         e.printStackTrace();
-                    } finally {
-                        if (outputStream != null) {
-                            try {
-                                outputStream.close();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
                     }
-                    count = 0;
+
+                    position = 0;
                     break;
             }
         }

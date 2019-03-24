@@ -12,24 +12,24 @@
 
         <ImageView fitHeight="38.0" fitWidth="38.0" onMouseClicked="#targetClicked" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_LEFT">
 
+            <Image url="@images/calibration_target_selected.png" />
+
+        </ImageView>
+
+        <ImageView fitHeight="38.0" fitWidth="38.0" onMouseClicked="#targetClicked" opacity="0.5" pickOnBounds="true" preserveRatio="true" rotate="90.0" StackPane.alignment="TOP_RIGHT">
+
             <Image url="@images/calibration_target.png" />
 
         </ImageView>
 
-        <ImageView fitHeight="38.0" fitWidth="38.0" onMouseClicked="#targetClicked" pickOnBounds="true" preserveRatio="true" rotate="90.0" StackPane.alignment="TOP_RIGHT">
-
-            <Image url="@images/calibration_target.png" />
-
-        </ImageView>
-
-        <ImageView fitHeight="38.0" fitWidth="75.0" onMouseClicked="#targetClicked" pickOnBounds="true" preserveRatio="true" StackPane.alignment="BOTTOM_CENTER">
+        <ImageView fitHeight="38.0" fitWidth="75.0" onMouseClicked="#targetClicked" opacity="0.5" pickOnBounds="true" preserveRatio="true" StackPane.alignment="BOTTOM_CENTER">
 
             <Image url="@images/calibration_target_lower.png" />
 
         </ImageView>
 
         <Group StackPane.alignment="CENTER">
-            <StackPane prefHeight="204.0" prefWidth="521.0">
+            <StackPane prefHeight="204.0" prefWidth="588.0">
 
                 <Label contentDisplay="TOP" text="Calibration" textFill="#424242" StackPane.alignment="TOP_CENTER">
 
@@ -41,7 +41,7 @@
 
                 <Button fx:id="end_calibration_button" alignment="CENTER" mnemonicParsing="false" onAction="#close" style="-fx-background-color: #546e7a;" text="Cancel" textFill="WHITE" StackPane.alignment="BOTTOM_CENTER" />
 
-                <Label alignment="CENTER" contentDisplay="CENTER" text="Place a finger on a target point and press [KEY] &#13; Repeat for all targets" textAlignment="CENTER" textFill="#424242" StackPane.alignment="CENTER">
+                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="70.0" prefWidth="559.0" text="Place a finger on an orange target and press [KEY] &#13; Repeat for all targets" textAlignment="CENTER" textFill="#424242" StackPane.alignment="CENTER">
 
                     <font>
                         <Font size="24.0" />

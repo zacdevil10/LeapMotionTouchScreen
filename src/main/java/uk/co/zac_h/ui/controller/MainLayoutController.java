@@ -5,13 +5,12 @@ import com.leapmotion.leap.Listener;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import uk.co.zac_h.ui.CalibrationOverlay;
 import uk.co.zac_h.utils.LeapController;
+import uk.co.zac_h.utils.MovementThread;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -20,14 +19,19 @@ public class MainLayoutController extends Listener implements Initializable {
 
     @FXML public ImageView close_button;
     @FXML public Label leap_status_text;
+    @FXML public Button button_start_service_main;
+    @FXML public Slider mouse_sens_slider;
     @FXML private RadioButton touch_click_mode_radio;
     @FXML private RadioButton two_finger_click_mode_radio;
-
     @FXML private RadioButton touch_mouse_mode_radio;
     @FXML private RadioButton mouse_mode_radio;
-
     @FXML private RadioButton tray_minimize_radio;
     @FXML private RadioButton task_bar_minimize_radio;
+
+    private MovementThread movementThread;
+    private Thread movement;
+
+    private Boolean isLeapRunning = false;
 
     private LeapController leapController;
 
@@ -66,6 +70,26 @@ public class MainLayoutController extends Listener implements Initializable {
     @FXML
     private void exited(MouseEvent event) {
         ((ImageView) event.getTarget()).setOpacity(0.7);
+    }
+
+    @FXML
+    public void startMouseService() {
+        if (!isLeapRunning) {
+            movementThread = new MovementThread(leapController);
+
+            movement = new Thread(movementThread);
+
+            movement.start();
+
+            button_start_service_main.setText("Stop");
+            isLeapRunning = true;
+        } else {
+            movementThread.stop();
+            movement.interrupt();
+
+            button_start_service_main.setText("Start");
+            isLeapRunning = false;
+        }
     }
 
     @FXML

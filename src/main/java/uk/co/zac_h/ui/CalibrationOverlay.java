@@ -22,6 +22,8 @@ public class CalibrationOverlay {
         Parent root = calibration.load();
         Scene scene = new Scene(root, Color.TRANSPARENT);
 
+        root.requestFocus();
+
         secondaryStage.setScene(scene);
         secondaryStage.setTitle("Leap Motion Touch Screen");
         secondaryStage.setHeight(graphicsDevice.getDisplayMode().getHeight());

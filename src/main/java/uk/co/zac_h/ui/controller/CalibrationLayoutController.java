@@ -3,10 +3,8 @@ package uk.co.zac_h.ui.controller;
 import com.leapmotion.leap.Vector;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -22,11 +20,14 @@ import java.util.ResourceBundle;
 
 public class CalibrationLayoutController implements Initializable {
 
-    @FXML public AnchorPane container;
-    @FXML public ImageView imageLeftPoint;
-    @FXML public ImageView imageRightPoint;
-    @FXML public ImageView imageBottomPoint;
-    @FXML public Button endCalibrationButton;
+    @FXML
+    private AnchorPane container;
+    @FXML
+    private ImageView imageLeftPoint;
+    @FXML
+    private ImageView imageRightPoint;
+    @FXML
+    private ImageView imageBottomPoint;
 
     private int position = 0;
 
@@ -42,60 +43,78 @@ public class CalibrationLayoutController implements Initializable {
     }
 
     @FXML
-    private void close() {
-        ((Stage) endCalibrationButton.getScene().getWindow()).close();
-    }
-
-    @FXML
     private void targetClicked(MouseEvent event) {
         System.out.println("X: " + event.getScreenX() + ", Y: " + event.getScreenY());
     }
 
     public void calibrationConfirm(KeyEvent keyEvent) {
         Properties properties = new Properties();
-        if (keyEvent.getCode() == KeyCode.ENTER) {
-            switch (position) {
-                case 0:
-                    setCurrentPointer(imageLeftPoint, "images/calibration_target.png", false);
-                    setCurrentPointer(imageRightPoint, "images/calibration_target_selected.png", true);
 
-                    topLeftPoint = leapController.getTouchPointablePosition();
-                    position++;
-                    break;
-                case 1:
-                    setCurrentPointer(imageRightPoint, "images/calibration_target.png", false);
-                    setCurrentPointer(imageBottomPoint, "images/calibration_target_lower_selected.png", true);
+        System.out.println("We arrived here!");
 
-                    topRightPoint = leapController.getTouchPointablePosition();
-                    position++;
-                    break;
-                case 2:
-                    bottomCenterPoint = leapController.getTouchPointablePosition();
-                    properties.setProperty("left_x", String.valueOf(topLeftPoint.getX()));
-                    properties.setProperty("left_y", String.valueOf(topLeftPoint.getY()));
-                    properties.setProperty("left_z", String.valueOf(topLeftPoint.getZ()));
+        System.out.println(keyEvent);
 
-                    properties.setProperty("right_x", String.valueOf(topRightPoint.getX()));
-                    properties.setProperty("right_y", String.valueOf(topRightPoint.getY()));
-                    properties.setProperty("right_z", String.valueOf(topRightPoint.getZ()));
+        switch (keyEvent.getCode()) {
+            case ENTER:
+                switch (position) {
+                    case 0:
+                        setCurrentPointer(imageLeftPoint, "images/calibration_target.png", false);
+                        setCurrentPointer(imageRightPoint, "images/calibration_target_selected.png", true);
 
-                    properties.setProperty("bottom_x", String.valueOf(bottomCenterPoint.getX()));
-                    properties.setProperty("bottom_y", String.valueOf(bottomCenterPoint.getY()));
-                    properties.setProperty("bottom_z", String.valueOf(bottomCenterPoint.getZ()));
+                        topLeftPoint = leapController.getTouchPointablePosition();
+                        position++;
+                        break;
+                    case 1:
+                        setCurrentPointer(imageRightPoint, "images/calibration_target.png", false);
+                        setCurrentPointer(imageBottomPoint, "images/calibration_target_lower_selected.png", true);
 
-                    try (OutputStream outputStream = new FileOutputStream("coordinates.properties")){
+                        topRightPoint = leapController.getTouchPointablePosition();
+                        position++;
+                        break;
+                    case 2:
+                        bottomCenterPoint = leapController.getTouchPointablePosition();
+                        properties.setProperty("left_x", String.valueOf(topLeftPoint.getX()));
+                        properties.setProperty("left_y", String.valueOf(topLeftPoint.getY()));
+                        properties.setProperty("left_z", String.valueOf(topLeftPoint.getZ()));
 
-                        properties.store(outputStream, null);
+                        properties.setProperty("right_x", String.valueOf(topRightPoint.getX()));
+                        properties.setProperty("right_y", String.valueOf(topRightPoint.getY()));
+                        properties.setProperty("right_z", String.valueOf(topRightPoint.getZ()));
 
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                        properties.setProperty("bottom_x", String.valueOf(bottomCenterPoint.getX()));
+                        properties.setProperty("bottom_y", String.valueOf(bottomCenterPoint.getY()));
+                        properties.setProperty("bottom_z", String.valueOf(bottomCenterPoint.getZ()));
 
-                    break;
-                default:
-                    //Something happened
-                    break;
-            }
+                        try (OutputStream outputStream = new FileOutputStream("coordinates.properties")){
+
+                            properties.store(outputStream, null);
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        close();
+
+                        break;
+                    default:
+                        //Something happened
+                        System.out.println("Oh no! Something bad happened!");
+                        break;
+                }
+                break;
+            case R:
+                position = 0;
+
+                setCurrentPointer(imageLeftPoint, "images/calibration_target_selected.png", true);
+                setCurrentPointer(imageRightPoint, "images/calibration_target.png", false);
+                setCurrentPointer(imageBottomPoint, "images/calibration_target_lower.png", false);
+
+                break;
+            case ESCAPE:
+                close();
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + keyEvent.getCode());
         }
     }
 
@@ -106,5 +125,10 @@ public class CalibrationLayoutController implements Initializable {
 
     public void setLeapController(LeapController leapController) {
         this.leapController = leapController;
+    }
+
+    @FXML
+    private void close() {
+        ((Stage) container.getScene().getWindow()).close();
     }
 }

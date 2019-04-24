@@ -6,23 +6,23 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<AnchorPane fx:id="container" onKeyPressed="#calibration_confirm" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uk.co.zac_h.ui.controller.CalibrationLayoutController">
+<AnchorPane fx:id="container" onKeyPressed="#calibrationConfirm" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uk.co.zac_h.ui.controller.CalibrationLayoutController">
 
     <StackPane AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
 
-        <ImageView fx:id="image_left_point" fitHeight="38.0" fitWidth="38.0" onMouseClicked="#targetClicked" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_LEFT">
+        <ImageView fx:id="imageLeftPoint" fitHeight="38.0" fitWidth="38.0" onMouseClicked="#targetClicked" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_LEFT">
 
             <Image url="@images/calibration_target_selected.png" />
 
         </ImageView>
 
-        <ImageView fx:id="image_right_point" fitHeight="38.0" fitWidth="38.0" onMouseClicked="#targetClicked" opacity="0.5" pickOnBounds="true" preserveRatio="true" rotate="90.0" StackPane.alignment="TOP_RIGHT">
+        <ImageView fx:id="imageRightPoint" fitHeight="38.0" fitWidth="38.0" onMouseClicked="#targetClicked" opacity="0.5" pickOnBounds="true" preserveRatio="true" rotate="90.0" StackPane.alignment="TOP_RIGHT">
 
             <Image url="@images/calibration_target.png" />
 
         </ImageView>
 
-        <ImageView fx:id="image_bottom_point" fitHeight="38.0" fitWidth="75.0" onMouseClicked="#targetClicked" opacity="0.5" pickOnBounds="true" preserveRatio="true" StackPane.alignment="BOTTOM_CENTER">
+        <ImageView fx:id="imageBottomPoint" fitHeight="38.0" fitWidth="75.0" onMouseClicked="#targetClicked" opacity="0.5" pickOnBounds="true" preserveRatio="true" StackPane.alignment="BOTTOM_CENTER">
 
             <Image url="@images/calibration_target_lower.png" />
 
@@ -39,7 +39,7 @@
 
                 </Label>
 
-                <Button fx:id="end_calibration_button" alignment="CENTER" mnemonicParsing="false" onAction="#close" style="-fx-background-color: #546e7a;" text="Cancel" textFill="WHITE" StackPane.alignment="BOTTOM_CENTER" />
+                <Button fx:id="endCalibrationButton" alignment="CENTER" mnemonicParsing="false" onAction="#close" style="-fx-background-color: #546e7a;" text="Cancel" textFill="WHITE" StackPane.alignment="BOTTOM_CENTER" />
 
                 <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="70.0" prefWidth="559.0" text="Place a finger on the orange target and press [KEY] &#13; Repeat for all targets" textAlignment="CENTER" textFill="#424242" StackPane.alignment="CENTER">
 

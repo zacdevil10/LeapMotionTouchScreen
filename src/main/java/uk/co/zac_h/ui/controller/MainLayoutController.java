@@ -1,5 +1,6 @@
 package uk.co.zac_h.ui.controller;
 
+
 import com.leapmotion.leap.Controller;
 import com.leapmotion.leap.Listener;
 import javafx.application.Platform;
@@ -17,16 +18,16 @@ import java.util.ResourceBundle;
 
 public class MainLayoutController extends Listener implements Initializable {
 
-    @FXML public ImageView close_button;
-    @FXML public Label leap_status_text;
-    @FXML public Button button_start_service_main;
-    @FXML public Slider mouse_sens_slider;
-    @FXML private RadioButton touch_click_mode_radio;
-    @FXML private RadioButton two_finger_click_mode_radio;
-    @FXML private RadioButton touch_mouse_mode_radio;
-    @FXML private RadioButton mouse_mode_radio;
-    @FXML private RadioButton tray_minimize_radio;
-    @FXML private RadioButton task_bar_minimize_radio;
+    @FXML public ImageView closeButton;
+    @FXML public Label leapStatusText;
+    @FXML public Button buttonStartServiceMain;
+    @FXML public Slider mouseSensSlider;
+    @FXML private RadioButton touchClickModeRadio;
+    @FXML private RadioButton twoFingerClickModeRadio;
+    @FXML private RadioButton touchMouseModeRadio;
+    @FXML private RadioButton mouseModeRadio;
+    @FXML private RadioButton trayMinimizeRadio;
+    @FXML private RadioButton taskBarMinimizeRadio;
 
     private MovementThread movementThread;
     private Thread movement;
@@ -36,6 +37,7 @@ public class MainLayoutController extends Listener implements Initializable {
     private LeapController leapController;
 
     public MainLayoutController() {
+        // Required empty public constructor
 
     }
 
@@ -45,16 +47,16 @@ public class MainLayoutController extends Listener implements Initializable {
         ToggleGroup mouseModeGroup = new ToggleGroup();
         ToggleGroup minimizeGroup = new ToggleGroup();
 
-        touch_click_mode_radio.setToggleGroup(clickModeGroup);
-        two_finger_click_mode_radio.setToggleGroup(clickModeGroup);
+        touchClickModeRadio.setToggleGroup(clickModeGroup);
+        twoFingerClickModeRadio.setToggleGroup(clickModeGroup);
 
-        touch_mouse_mode_radio.setToggleGroup(mouseModeGroup);
-        mouse_mode_radio.setToggleGroup(mouseModeGroup);
+        touchMouseModeRadio.setToggleGroup(mouseModeGroup);
+        mouseModeRadio.setToggleGroup(mouseModeGroup);
 
-        tray_minimize_radio.setToggleGroup(minimizeGroup);
-        task_bar_minimize_radio.setToggleGroup(minimizeGroup);
+        trayMinimizeRadio.setToggleGroup(minimizeGroup);
+        taskBarMinimizeRadio.setToggleGroup(minimizeGroup);
 
-        close_button.setOnMouseClicked(event -> System.exit(0));
+        closeButton.setOnMouseClicked(event -> System.exit(0));
     }
 
     public void setLeapController(LeapController leapController) {
@@ -81,13 +83,13 @@ public class MainLayoutController extends Listener implements Initializable {
 
             movement.start();
 
-            button_start_service_main.setText("Stop");
+            buttonStartServiceMain.setText("Stop");
             isLeapRunning = true;
         } else {
             movementThread.stop();
             movement.interrupt();
 
-            button_start_service_main.setText("Start");
+            buttonStartServiceMain.setText("Start");
             isLeapRunning = false;
         }
     }
@@ -100,11 +102,11 @@ public class MainLayoutController extends Listener implements Initializable {
 
     @Override
     public void onConnect(Controller controller) {
-        Platform.runLater(() -> leap_status_text.setText("Leap Motion status: Connected"));
+        Platform.runLater(() -> leapStatusText.setText("Leap Motion status: Connected"));
     }
 
     @Override
     public void onDisconnect(Controller controller) {
-        Platform.runLater(() -> leap_status_text.setText("Leap Motion status: Disconnected"));
+        Platform.runLater(() -> leapStatusText.setText("Leap Motion status: Disconnected"));
     }
 }

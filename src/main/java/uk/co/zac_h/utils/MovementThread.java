@@ -26,7 +26,7 @@ public class MovementThread implements Runnable {
             ArrayList<Vector> coordinates = loadCoordinates();
             MouseController mouseController = new MouseController();
 
-            if (coordinates != null) while (run) {
+            if (!coordinates.isEmpty()) while (run) {
                 leapController.setCurrentFrame();
 
                 if (!leapController.currentFrame.hands().isEmpty()) {
@@ -40,15 +40,19 @@ public class MovementThread implements Runnable {
 
                         mouseController.setMousePosition(xScaleFactor, yScaleFactor);
 
-                        if (position.getZ() < (coordinates.get(0).getZ() + coordinates.get(1).getZ() + coordinates.get(2).getZ()) / 3) {
-                            mouseController.mousePress(InputEvent.BUTTON1_MASK);
-                            mouseController.mouseRelease(InputEvent.BUTTON1_MASK);
-                        }
+                        setTouchPlane(coordinates, mouseController, position);
                     }
                 }
             }
         } catch (AWTException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void setTouchPlane(ArrayList<Vector> coordinates, MouseController mouseController, Vector position) {
+        if (position.getZ() < (coordinates.get(0).getZ() + coordinates.get(1).getZ() + coordinates.get(2).getZ()) / 3) {
+            mouseController.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+            mouseController.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
         }
     }
 
@@ -62,12 +66,13 @@ public class MovementThread implements Runnable {
      * @return Calibration coordinates array
      */
     private ArrayList<Vector> loadCoordinates() {
+        ArrayList<Vector> arrayList = new ArrayList<>();
+
         try (InputStream inputStream = new FileInputStream("coordinates.properties")) {
             Properties properties = new Properties();
 
             properties.load(inputStream);
 
-            ArrayList<Vector> arrayList = new ArrayList<>();
             arrayList.add(addCoordinates("left", properties));
             arrayList.add(addCoordinates("right", properties));
             arrayList.add(addCoordinates("bottom", properties));
@@ -77,7 +82,7 @@ public class MovementThread implements Runnable {
             e.printStackTrace();
         }
 
-        return null;
+        return arrayList;
     }
 
     private Vector addCoordinates(String position, Properties properties) {

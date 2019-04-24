@@ -10,14 +10,11 @@ import uk.co.zac_h.ui.controller.CalibrationLayoutController;
 import uk.co.zac_h.utils.LeapController;
 
 import java.awt.*;
+import java.io.IOException;
 
 public class CalibrationOverlay {
 
-    private LeapController leapController;
-
-    public void start(LeapController leapController) throws Exception {
-        this.leapController = leapController;
-
+    public void start(LeapController leapController) throws IOException {
         FXMLLoader calibration = new FXMLLoader(getClass().getClassLoader().getResource("layout_calibration.fxml"));
 
         Stage secondaryStage = new Stage();

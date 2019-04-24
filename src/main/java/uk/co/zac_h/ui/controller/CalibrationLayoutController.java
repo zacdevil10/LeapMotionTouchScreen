@@ -23,10 +23,10 @@ import java.util.ResourceBundle;
 public class CalibrationLayoutController implements Initializable {
 
     @FXML public AnchorPane container;
-    @FXML public ImageView image_left_point;
-    @FXML public ImageView image_right_point;
-    @FXML public ImageView image_bottom_point;
-    @FXML public Button end_calibration_button;
+    @FXML public ImageView imageLeftPoint;
+    @FXML public ImageView imageRightPoint;
+    @FXML public ImageView imageBottomPoint;
+    @FXML public Button endCalibrationButton;
 
     private int position = 0;
 
@@ -38,12 +38,12 @@ public class CalibrationLayoutController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        // Required
     }
 
     @FXML
     private void close() {
-        ((Stage) end_calibration_button.getScene().getWindow()).close();
+        ((Stage) endCalibrationButton.getScene().getWindow()).close();
     }
 
     @FXML
@@ -51,20 +51,20 @@ public class CalibrationLayoutController implements Initializable {
         System.out.println("X: " + event.getScreenX() + ", Y: " + event.getScreenY());
     }
 
-    public void calibration_confirm(KeyEvent keyEvent) {
+    public void calibrationConfirm(KeyEvent keyEvent) {
         Properties properties = new Properties();
         if (keyEvent.getCode() == KeyCode.ENTER) {
             switch (position) {
                 case 0:
-                    setCurrentPointer(image_left_point, "images/calibration_target.png", false);
-                    setCurrentPointer(image_right_point, "images/calibration_target_selected.png", true);
+                    setCurrentPointer(imageLeftPoint, "images/calibration_target.png", false);
+                    setCurrentPointer(imageRightPoint, "images/calibration_target_selected.png", true);
 
                     topLeftPoint = leapController.getTouchPointablePosition();
                     position++;
                     break;
                 case 1:
-                    setCurrentPointer(image_right_point, "images/calibration_target.png", false);
-                    setCurrentPointer(image_bottom_point, "images/calibration_target_lower_selected.png", true);
+                    setCurrentPointer(imageRightPoint, "images/calibration_target.png", false);
+                    setCurrentPointer(imageBottomPoint, "images/calibration_target_lower_selected.png", true);
 
                     topRightPoint = leapController.getTouchPointablePosition();
                     position++;
@@ -91,7 +91,9 @@ public class CalibrationLayoutController implements Initializable {
                         e.printStackTrace();
                     }
 
-                    position = 0;
+                    break;
+                default:
+                    //Something happened
                     break;
             }
         }

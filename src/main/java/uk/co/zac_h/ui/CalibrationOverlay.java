@@ -14,7 +14,7 @@ import java.io.IOException;
 
 public class CalibrationOverlay {
 
-    public void start(LeapController leapController) throws IOException {
+    public void start(LeapController leapController, CalibrationLayoutController.Update update) throws IOException {
         FXMLLoader calibration = new FXMLLoader(getClass().getClassLoader().getResource("layout_calibration.fxml"));
 
         Stage secondaryStage = new Stage();
@@ -34,6 +34,7 @@ public class CalibrationOverlay {
 
         CalibrationLayoutController calibrationLayoutController = calibration.getController();
 
+        calibrationLayoutController.setUpdateInterface(update);
         calibrationLayoutController.setLeapController(leapController);
     }
 }

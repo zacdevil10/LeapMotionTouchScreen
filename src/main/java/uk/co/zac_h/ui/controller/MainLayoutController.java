@@ -13,10 +13,11 @@ import uk.co.zac_h.ui.CalibrationOverlay;
 import uk.co.zac_h.utils.LeapController;
 import uk.co.zac_h.utils.MovementThread;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class MainLayoutController extends Listener implements Initializable {
+public class MainLayoutController extends Listener implements Initializable, CalibrationLayoutController.Update {
 
     @FXML public ImageView closeButton;
     @FXML public Label leapStatusText;
@@ -35,6 +36,8 @@ public class MainLayoutController extends Listener implements Initializable {
     private Boolean isLeapRunning = false;
 
     private LeapController leapController;
+
+
 
     public MainLayoutController() {
         // Required empty public constructor
@@ -95,9 +98,14 @@ public class MainLayoutController extends Listener implements Initializable {
     }
 
     @FXML
-    private void startCalibration() throws Exception {
+    private void startCalibration() throws IOException {
         CalibrationOverlay calibrationOverlay = new CalibrationOverlay();
-        calibrationOverlay.start(leapController);
+        calibrationOverlay.start(leapController, this);
+    }
+
+    @Override
+    public void calibrationUpdate() {
+        if (isLeapRunning) movementThread.updateCoordinates();
     }
 
     @Override

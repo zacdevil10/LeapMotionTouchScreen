@@ -9,19 +9,19 @@
 
     <StackPane AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
 
-        <ImageView fx:id="imageLeftPoint" fitHeight="38.0" fitWidth="38.0" onMouseClicked="#targetClicked" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_LEFT">
+        <ImageView fx:id="imageLeftPoint" fitHeight="38.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_LEFT">
 
             <Image url="@images/calibration_target_selected.png" />
 
         </ImageView>
 
-        <ImageView fx:id="imageRightPoint" fitHeight="38.0" fitWidth="38.0" onMouseClicked="#targetClicked" opacity="0.5" pickOnBounds="true" preserveRatio="true" rotate="90.0" StackPane.alignment="TOP_RIGHT">
+        <ImageView fx:id="imageRightPoint" fitHeight="38.0" fitWidth="38.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" rotate="90.0" StackPane.alignment="TOP_RIGHT">
 
             <Image url="@images/calibration_target.png" />
 
         </ImageView>
 
-        <ImageView fx:id="imageBottomPoint" fitHeight="38.0" fitWidth="75.0" onMouseClicked="#targetClicked" opacity="0.5" pickOnBounds="true" preserveRatio="true" StackPane.alignment="BOTTOM_CENTER">
+        <ImageView fx:id="imageBottomPoint" fitHeight="38.0" fitWidth="75.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" StackPane.alignment="BOTTOM_CENTER">
 
             <Image url="@images/calibration_target_lower.png" />
 

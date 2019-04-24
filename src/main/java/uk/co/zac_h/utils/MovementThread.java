@@ -14,6 +14,8 @@ public class MovementThread implements Runnable {
 
     private final LeapController leapController;
 
+    private ArrayList<Vector> coordinates = new ArrayList<>();
+
     private Boolean run = true;
 
     public MovementThread(LeapController leapController) {
@@ -23,7 +25,7 @@ public class MovementThread implements Runnable {
     @Override
     public void run() {
         try {
-            ArrayList<Vector> coordinates = loadCoordinates();
+            coordinates = loadCoordinates();
             MouseController mouseController = new MouseController();
 
             if (!coordinates.isEmpty()) while (run) {
@@ -83,6 +85,10 @@ public class MovementThread implements Runnable {
         }
 
         return arrayList;
+    }
+
+    public void updateCoordinates() {
+        coordinates = loadCoordinates();
     }
 
     private Vector addCoordinates(String position, Properties properties) {

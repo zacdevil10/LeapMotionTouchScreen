@@ -6,7 +6,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import uk.co.zac_h.utils.LeapController;
@@ -20,6 +19,12 @@ import java.util.ResourceBundle;
 
 public class CalibrationLayoutController implements Initializable {
 
+    public interface Update {
+        void calibrationUpdate();
+    }
+
+    private Update update;
+
     @FXML
     private AnchorPane container;
     @FXML
@@ -28,6 +33,12 @@ public class CalibrationLayoutController implements Initializable {
     private ImageView imageRightPoint;
     @FXML
     private ImageView imageBottomPoint;
+
+    //Calibration images
+    private static final String CAL_TARGET = "images/calibration_target.png";
+    private static final String CAL_TARGET_SELECTED = "images/calibration_target_selected.png";
+    private static final String CAL_TARGET_LOWER = "images/calibration_target_lower.png";
+    private static final String CAL_TARGET_LOWER_SELECTED = "images/calibration_target_lower_selected.png";
 
     private int position = 0;
 
@@ -42,31 +53,22 @@ public class CalibrationLayoutController implements Initializable {
         // Required
     }
 
-    @FXML
-    private void targetClicked(MouseEvent event) {
-        System.out.println("X: " + event.getScreenX() + ", Y: " + event.getScreenY());
-    }
-
     public void calibrationConfirm(KeyEvent keyEvent) {
         Properties properties = new Properties();
-
-        System.out.println("We arrived here!");
-
-        System.out.println(keyEvent);
 
         switch (keyEvent.getCode()) {
             case ENTER:
                 switch (position) {
                     case 0:
-                        setCurrentPointer(imageLeftPoint, "images/calibration_target.png", false);
-                        setCurrentPointer(imageRightPoint, "images/calibration_target_selected.png", true);
+                        setCurrentPointer(imageLeftPoint, CAL_TARGET, false);
+                        setCurrentPointer(imageRightPoint, CAL_TARGET_SELECTED, true);
 
                         topLeftPoint = leapController.getTouchPointablePosition();
                         position++;
                         break;
                     case 1:
-                        setCurrentPointer(imageRightPoint, "images/calibration_target.png", false);
-                        setCurrentPointer(imageBottomPoint, "images/calibration_target_lower_selected.png", true);
+                        setCurrentPointer(imageRightPoint, CAL_TARGET, false);
+                        setCurrentPointer(imageBottomPoint, CAL_TARGET_LOWER_SELECTED, true);
 
                         topRightPoint = leapController.getTouchPointablePosition();
                         position++;
@@ -97,17 +99,15 @@ public class CalibrationLayoutController implements Initializable {
 
                         break;
                     default:
-                        //Something happened
-                        System.out.println("Oh no! Something bad happened!");
                         break;
                 }
                 break;
             case R:
                 position = 0;
 
-                setCurrentPointer(imageLeftPoint, "images/calibration_target_selected.png", true);
-                setCurrentPointer(imageRightPoint, "images/calibration_target.png", false);
-                setCurrentPointer(imageBottomPoint, "images/calibration_target_lower.png", false);
+                setCurrentPointer(imageLeftPoint, CAL_TARGET_SELECTED, true);
+                setCurrentPointer(imageRightPoint, CAL_TARGET, false);
+                setCurrentPointer(imageBottomPoint, CAL_TARGET_LOWER, false);
 
                 break;
             case ESCAPE:
@@ -123,12 +123,17 @@ public class CalibrationLayoutController implements Initializable {
         image.setImage(new Image(res));
     }
 
+    public void setUpdateInterface(Update update) {
+        this.update = update;
+    }
+
     public void setLeapController(LeapController leapController) {
         this.leapController = leapController;
     }
 
     @FXML
     private void close() {
+        update.calibrationUpdate();
         ((Stage) container.getScene().getWindow()).close();
     }
 }

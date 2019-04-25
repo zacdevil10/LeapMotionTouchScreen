@@ -9,8 +9,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MovementThread implements Runnable {
+
+    private static final Logger LOGGER = Logger.getLogger(MovementThread.class.getName());
 
     private final LeapController leapController;
 
@@ -47,7 +51,7 @@ public class MovementThread implements Runnable {
                 }
             }
         } catch (AWTException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.WARNING, e.getMessage());
         }
     }
 
@@ -81,7 +85,7 @@ public class MovementThread implements Runnable {
 
             return arrayList;
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.WARNING, e.getMessage());
         }
 
         return arrayList;

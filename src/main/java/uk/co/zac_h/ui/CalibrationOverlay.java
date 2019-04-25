@@ -25,7 +25,7 @@ public class CalibrationOverlay {
         root.requestFocus();
 
         secondaryStage.setScene(scene);
-        secondaryStage.setTitle("Leap Motion Touch Screen");
+        secondaryStage.setTitle("Calibration");
         secondaryStage.setHeight(graphicsDevice.getDisplayMode().getHeight());
         secondaryStage.setWidth(graphicsDevice.getDisplayMode().getWidth());
         secondaryStage.setFullScreen(true);

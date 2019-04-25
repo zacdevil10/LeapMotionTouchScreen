@@ -16,6 +16,8 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.util.Properties;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CalibrationLayoutController implements Initializable {
 
@@ -25,14 +27,12 @@ public class CalibrationLayoutController implements Initializable {
 
     private Update update;
 
-    @FXML
-    private AnchorPane container;
-    @FXML
-    private ImageView imageLeftPoint;
-    @FXML
-    private ImageView imageRightPoint;
-    @FXML
-    private ImageView imageBottomPoint;
+    private static final Logger LOGGER = Logger.getLogger(CalibrationLayoutController.class.getName());
+
+    @FXML private AnchorPane container;
+    @FXML private ImageView imageLeftPoint;
+    @FXML private ImageView imageRightPoint;
+    @FXML private ImageView imageBottomPoint;
 
     //Calibration images
     private static final String CAL_TARGET = "images/calibration_target.png";
@@ -54,8 +54,6 @@ public class CalibrationLayoutController implements Initializable {
     }
 
     public void calibrationConfirm(KeyEvent keyEvent) {
-        Properties properties = new Properties();
-
         switch (keyEvent.getCode()) {
             case ENTER:
                 switch (position) {
@@ -75,26 +73,8 @@ public class CalibrationLayoutController implements Initializable {
                         break;
                     case 2:
                         bottomCenterPoint = leapController.getTouchPointablePosition();
-                        properties.setProperty("left_x", String.valueOf(topLeftPoint.getX()));
-                        properties.setProperty("left_y", String.valueOf(topLeftPoint.getY()));
-                        properties.setProperty("left_z", String.valueOf(topLeftPoint.getZ()));
 
-                        properties.setProperty("right_x", String.valueOf(topRightPoint.getX()));
-                        properties.setProperty("right_y", String.valueOf(topRightPoint.getY()));
-                        properties.setProperty("right_z", String.valueOf(topRightPoint.getZ()));
-
-                        properties.setProperty("bottom_x", String.valueOf(bottomCenterPoint.getX()));
-                        properties.setProperty("bottom_y", String.valueOf(bottomCenterPoint.getY()));
-                        properties.setProperty("bottom_z", String.valueOf(bottomCenterPoint.getZ()));
-
-                        try (OutputStream outputStream = new FileOutputStream("coordinates.properties")){
-
-                            properties.store(outputStream, null);
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
+                        setCoordinates();
                         close();
 
                         break;
@@ -115,6 +95,28 @@ public class CalibrationLayoutController implements Initializable {
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + keyEvent.getCode());
+        }
+    }
+
+    private void setCoordinates() {
+        Properties properties = new Properties();
+
+        properties.setProperty("left_x", String.valueOf(topLeftPoint.getX()));
+        properties.setProperty("left_y", String.valueOf(topLeftPoint.getY()));
+        properties.setProperty("left_z", String.valueOf(topLeftPoint.getZ()));
+
+        properties.setProperty("right_x", String.valueOf(topRightPoint.getX()));
+        properties.setProperty("right_y", String.valueOf(topRightPoint.getY()));
+        properties.setProperty("right_z", String.valueOf(topRightPoint.getZ()));
+
+        properties.setProperty("bottom_x", String.valueOf(bottomCenterPoint.getX()));
+        properties.setProperty("bottom_y", String.valueOf(bottomCenterPoint.getY()));
+        properties.setProperty("bottom_z", String.valueOf(bottomCenterPoint.getZ()));
+
+        try (OutputStream outputStream = new FileOutputStream("coordinates.properties")){
+            properties.store(outputStream, null);
+        } catch (IOException e) {
+            LOGGER.log(Level.WARNING, e.getMessage());
         }
     }
 

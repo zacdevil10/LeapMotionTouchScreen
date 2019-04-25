@@ -1,29 +1,32 @@
 package uk.co.zac_h.utils;
 
-import com.leapmotion.leap.Controller;
-import com.leapmotion.leap.Frame;
-import com.leapmotion.leap.Vector;
+import com.leapmotion.leap.*;
 
 public class LeapController {
 
-    private Controller controller;
-    private Frame currentFrame;
+    private final Controller controller;
+    Frame currentFrame;
     private Frame previousFrame;
 
     public LeapController() {
         controller = new Controller();
+        controller.setPolicy(Controller.PolicyFlag.POLICY_BACKGROUND_FRAMES);
     }
 
-    public void setCurrentFrame() {
+    void setCurrentFrame() {
         previousFrame = currentFrame;
         currentFrame = controller.frame();
     }
 
-    public Vector getTouchFingerPosition() {
-        return controller.frame().hands().get(1).fingers().frontmost().tipPosition();
+    public Vector getTouchPointablePosition() {
+        return controller.frame().pointables().frontmost().tipPosition();
     }
 
-    public boolean isConnected() {
-        return controller.isConnected();
+    Vector getTouchTouchPosition() {
+        return currentFrame.hands().rightmost().fingers().fingerType(Finger.Type.TYPE_INDEX).extended().frontmost().tipPosition();
+    }
+
+    public void setControllerListener(Listener listener) {
+        controller.addListener(listener);
     }
 }

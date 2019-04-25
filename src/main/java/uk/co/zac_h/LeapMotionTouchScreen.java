@@ -7,8 +7,8 @@ import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
-import java.util.Objects;
+import uk.co.zac_h.ui.controller.MainLayoutController;
+import uk.co.zac_h.utils.LeapController;
 
 public class LeapMotionTouchScreen extends Application {
 
@@ -21,7 +21,9 @@ public class LeapMotionTouchScreen extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("layout_main.fxml")));
+        FXMLLoader main = new FXMLLoader(getClass().getClassLoader().getResource("layout_main.fxml"));
+
+        Parent root = main.load();
         Scene scene = new Scene(root, Color.TRANSPARENT);
 
         primaryStage.setScene(scene);
@@ -38,5 +40,13 @@ public class LeapMotionTouchScreen extends Application {
             primaryStage.setX(event.getScreenX() - xOffset);
             primaryStage.setY(event.getScreenY() - yOffset);
         });
+
+        MainLayoutController mainLayoutController = main.getController();
+
+        LeapController leapController = new LeapController();
+
+        mainLayoutController.setLeapController(leapController);
     }
+
+
 }

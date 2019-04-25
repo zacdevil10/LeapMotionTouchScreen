@@ -1,59 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<AnchorPane id="container" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.172-ea"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="uk.co.zac_h.ui.controller.CalibrationLayoutController">
+<AnchorPane fx:id="container" onKeyPressed="#calibrationConfirm" prefHeight="720.0" prefWidth="1280.0" xmlns:fx="http://javafx.com/fxml" fx:controller="uk.co.zac_h.ui.controller.CalibrationLayoutController">
 
-    <StackPane AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0"
-               AnchorPane.topAnchor="2.0">
+    <StackPane AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
 
-        <ImageView fitHeight="75.0" fitWidth="308.0" pickOnBounds="true" preserveRatio="true"
-                   StackPane.alignment="TOP_LEFT">
+        <ImageView fx:id="imageLeftPoint" fitHeight="38.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_LEFT">
 
-            <Image url="@images/calibration_target.png"/>
+            <Image url="@images/calibration_target_selected.png" />
 
         </ImageView>
 
-        <ImageView fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true"
-                   StackPane.alignment="TOP_RIGHT">
+        <ImageView fx:id="imageRightPoint" fitHeight="38.0" fitWidth="38.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" rotate="90.0" StackPane.alignment="TOP_RIGHT">
 
-            <Image url="@images/calibration_target.png"/>
+            <Image url="@images/calibration_target.png" />
 
         </ImageView>
 
-        <ImageView fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true"
-                   StackPane.alignment="BOTTOM_CENTER">
+        <ImageView fx:id="imageBottomPoint" fitHeight="38.0" fitWidth="75.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" StackPane.alignment="BOTTOM_CENTER">
 
-            <Image url="@images/calibration_target.png"/>
+            <Image url="@images/calibration_target_lower.png" />
 
         </ImageView>
 
         <Group StackPane.alignment="CENTER">
-            <StackPane prefHeight="204.0" prefWidth="521.0">
+            <StackPane prefHeight="189.0" prefWidth="588.0">
 
                 <Label contentDisplay="TOP" text="Calibration" textFill="#424242" StackPane.alignment="TOP_CENTER">
 
                     <font>
-                        <Font size="34.0"/>
+                        <Font size="34.0" />
                     </font>
 
                 </Label>
 
-                <Button fx:id="end_calibration_button" alignment="CENTER" mnemonicParsing="false" onAction="#close"
-                        style="-fx-background-color: #546e7a;" text="Cancel" textFill="WHITE"
-                        StackPane.alignment="BOTTOM_CENTER"/>
-
-                <Label alignment="CENTER" contentDisplay="CENTER"
-                       text="Place a finger on a target point and press [KEY] &#13; Repeat for all targets"
-                       textAlignment="CENTER" textFill="#424242" StackPane.alignment="CENTER">
+                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="125.0" prefWidth="601.0" text="Place a finger on the orange target and press [ENTER] &#13; Repeat for all targets &#13; Press [R] to reset and [ESC] to cancel" textAlignment="CENTER" textFill="#424242" StackPane.alignment="BOTTOM_CENTER">
 
                     <font>
-                        <Font size="24.0"/>
+                        <Font size="24.0" />
                     </font>
 
                 </Label>

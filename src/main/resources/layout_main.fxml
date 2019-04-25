@@ -5,95 +5,82 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<AnchorPane prefHeight="753.0" prefWidth="608.0" style="-fx-background-color: transparent;"
-            stylesheets="@main_style.css" xmlns="http://javafx.com/javafx/8.0.172-ea"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="uk.co.zac_h.ui.controller.MainLayoutController">
+<AnchorPane prefHeight="753.0" prefWidth="608.0" style="-fx-background-color: transparent;" stylesheets="@main_style.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uk.co.zac_h.ui.controller.MainLayoutController">
 
     <AnchorPane prefHeight="100.0" prefWidth="608.0" style="-fx-background-color: #29434e;">
 
-        <ImageView fx:id="close_button" fitHeight="34.0" fitWidth="37.0" layoutX="557.0" layoutY="33.0"
-                   onMouseEntered="#entered" onMouseExited="#exited" opacity="0.7"
-                   pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="closeButton" fitHeight="34.0" fitWidth="37.0" layoutX="557.0" layoutY="33.0" onMouseEntered="#entered" onMouseExited="#exited" opacity="0.7" pickOnBounds="true" preserveRatio="true">
 
-            <Image url="@images/close.png"/>
+            <Image url="@images/close.png" />
         </ImageView>
 
-        <ImageView fitHeight="34.0" fitWidth="37.0" layoutX="523.0" layoutY="33.0" onMouseEntered="#entered"
-                   onMouseExited="#exited" opacity="0.7" pickOnBounds="true" preserveRatio="true">
+        <ImageView fitHeight="34.0" fitWidth="37.0" layoutX="523.0" layoutY="33.0" onMouseEntered="#entered" onMouseExited="#exited" opacity="0.7" pickOnBounds="true" preserveRatio="true">
 
-            <Image url="@images/minimize.png"/>
+            <Image url="@images/minimize.png" />
 
         </ImageView>
 
-        <Label alignment="CENTER" layoutX="14.0" layoutY="22.0" prefHeight="56.0" prefWidth="408.0"
-               text="Leap Motion Touch Screen" textFill="WHITE">
+        <Label alignment="CENTER" layoutX="14.0" layoutY="22.0" prefHeight="56.0" prefWidth="408.0" text="Leap Motion Touch Screen" textFill="WHITE">
             <font>
-                <Font size="34.0"/>
+                <Font size="34.0" />
             </font>
         </Label>
 
     </AnchorPane>
 
-    <AnchorPane layoutY="113.0" prefHeight="641.0" prefWidth="608.0"
-                style="-fx-background-color: #546e7a;">
+    <AnchorPane layoutY="113.0" prefHeight="641.0" prefWidth="608.0" style="-fx-background-color: #546e7a;">
 
 
         <AnchorPane prefHeight="641.0" prefWidth="608.0" style="-fx-background-color: #546e7a;">
 
 
-            <Button layoutX="62.0" layoutY="145.0" mnemonicParsing="false"
-                    onAction="#startCalibration" text="Start Calibration" textFill="WHITE">
+            <Button layoutX="62.0" layoutY="145.0" mnemonicParsing="false" onAction="#startCalibration" text="Start Calibration" textFill="WHITE">
                 <font>
-                    <Font size="18.0"/>
+                    <Font size="18.0" />
                 </font>
             </Button>
 
-            <CheckBox layoutX="64.0" layoutY="465.0" mnemonicParsing="false" selected="true" text="Close to tray"
-                      textFill="WHITE">
+            <CheckBox layoutX="64.0" layoutY="465.0" mnemonicParsing="false" selected="true" text="Close to tray" textFill="WHITE">
                 <font>
-                    <Font size="18.0"/>
+                    <Font size="18.0" />
                 </font>
             </CheckBox>
 
-            <Label layoutX="64.0" layoutY="61.0" text="Leap Motion status: Disconnected" textFill="WHITE">
+            <Label fx:id="leapStatusText" layoutX="64.0" layoutY="19.0" text="Leap Motion status: Disconnected" textFill="WHITE">
                 <font>
-                    <Font size="18.0"/>
+                    <Font size="18.0" />
                 </font>
             </Label>
 
             <Pane layoutX="62.0" layoutY="195.0" prefHeight="56.0" prefWidth="364.0">
-                <Slider layoutX="154.0" layoutY="16.0" min="1.0" prefHeight="14.0" prefWidth="204.0"
-                        showTickMarks="true"/>
+                <Slider fx:id="mouseSensSlider" blockIncrement="0.1" layoutX="154.0" layoutY="16.0" majorTickUnit="0.25" max="1.5" min="1.0" prefHeight="14.0" prefWidth="204.0" showTickMarks="true" />
                 <Label layoutY="9.0" text="Mouse Sensitivity" textFill="WHITE">
                     <font>
-                        <Font size="18.0"/>
+                        <Font size="18.0" />
                     </font>
                 </Label>
             </Pane>
 
-            <CheckBox disable="true" layoutX="64.0" layoutY="251.0" mnemonicParsing="false" text="Windows Touch"
-                      textFill="WHITE">
+            <CheckBox disable="true" layoutX="64.0" layoutY="251.0" mnemonicParsing="false" text="Windows Touch" textFill="WHITE">
                 <font>
-                    <Font size="18.0"/>
+                    <Font size="18.0" />
                 </font>
             </CheckBox>
 
             <Pane layoutX="64.0" layoutY="290.0" prefHeight="112.0" prefWidth="160.0">
                 <Label layoutY="14.0" text="Click Mode" textFill="WHITE">
                     <font>
-                        <Font size="18.0"/>
+                        <Font size="18.0" />
                     </font>
                 </Label>
-                <RadioButton fx:id="touch_click_mode_radio" layoutY="53.0" mnemonicParsing="false" selected="true"
-                             text="Touch screen" textFill="WHITE">
+                <RadioButton fx:id="touchClickModeRadio" layoutY="53.0" mnemonicParsing="false" selected="true" text="Touch screen" textFill="WHITE">
                     <font>
-                        <Font size="14.0"/>
+                        <Font size="14.0" />
                     </font>
                 </RadioButton>
-                <RadioButton fx:id="two_finger_click_mode_radio" layoutY="82.0" mnemonicParsing="false"
-                             text="Two finger click" textFill="WHITE">
+                <RadioButton fx:id="twoFingerClickModeRadio" layoutY="82.0" mnemonicParsing="false" text="Two finger click" textFill="WHITE">
                     <font>
-                        <Font size="14.0"/>
+                        <Font size="14.0" />
                     </font>
                 </RadioButton>
             </Pane>
@@ -101,19 +88,17 @@
             <Pane layoutX="244.0" layoutY="290.0" prefHeight="112.0" prefWidth="160.0">
                 <Label layoutY="14.0" text="Mouse Mode" textFill="WHITE">
                     <font>
-                        <Font size="18.0"/>
+                        <Font size="18.0" />
                     </font>
                 </Label>
-                <RadioButton fx:id="touch_mouse_mode_radio" layoutY="53.0" mnemonicParsing="false" selected="true"
-                             text="Touch screen" textFill="WHITE">
+                <RadioButton fx:id="touchMouseModeRadio" layoutY="53.0" mnemonicParsing="false" selected="true" text="Touch screen" textFill="WHITE">
                     <font>
-                        <Font size="14.0"/>
+                        <Font size="14.0" />
                     </font>
                 </RadioButton>
-                <RadioButton fx:id="mouse_mode_radio" layoutY="82.0" mnemonicParsing="false" text="Mouse"
-                             textFill="WHITE">
+                <RadioButton fx:id="mouseModeRadio" layoutY="82.0" mnemonicParsing="false" text="Mouse" textFill="WHITE">
                     <font>
-                        <Font size="14.0"/>
+                        <Font size="14.0" />
                     </font>
                 </RadioButton>
             </Pane>
@@ -121,32 +106,35 @@
             <Pane layoutX="64.0" layoutY="492.0" prefHeight="112.0" prefWidth="160.0">
                 <Label layoutY="14.0" text="Minimize to:" textFill="WHITE">
                     <font>
-                        <Font size="18.0"/>
+                        <Font size="18.0" />
                     </font>
                 </Label>
-                <RadioButton fx:id="tray_minimize_radio" layoutY="53.0" mnemonicParsing="false" text="Tray"
-                             textFill="WHITE">
+                <RadioButton fx:id="trayMinimizeRadio" layoutY="53.0" mnemonicParsing="false" text="Tray" textFill="WHITE">
                     <font>
-                        <Font size="14.0"/>
+                        <Font size="14.0" />
                     </font>
                 </RadioButton>
-                <RadioButton fx:id="task_bar_minimize_radio" layoutY="82.0" mnemonicParsing="false" selected="true"
-                             text="Task bar" textFill="WHITE">
+                <RadioButton fx:id="taskBarMinimizeRadio" layoutY="82.0" mnemonicParsing="false" selected="true" text="Task bar" textFill="WHITE">
                     <font>
-                        <Font size="14.0"/>
+                        <Font size="14.0" />
                     </font>
                 </RadioButton>
             </Pane>
             <Label layoutX="62.0" layoutY="107.0" text="Mouse settings" textFill="WHITE" underline="true">
                 <font>
-                    <Font size="18.0"/>
+                    <Font size="18.0" />
                 </font>
             </Label>
             <Label layoutX="62.0" layoutY="423.0" text="Window settings" textFill="WHITE" underline="true">
                 <font>
-                    <Font size="18.0"/>
+                    <Font size="18.0" />
                 </font>
             </Label>
+         <Button fx:id="buttonStartServiceMain" layoutX="62.0" layoutY="56.0" mnemonicParsing="false" onAction="#startMouseService" prefHeight="39.0" prefWidth="153.0" text="Start" textFill="WHITE">
+            <font>
+               <Font size="18.0" />
+            </font>
+         </Button>
         </AnchorPane>
 
     </AnchorPane>

@@ -23,7 +23,7 @@ public class LeapController {
     }
 
     Vector getTouchTouchPosition() {
-        return currentFrame.hands().rightmost().fingers().fingerType(Finger.Type.TYPE_INDEX).extended().frontmost().tipPosition();
+        return currentFrame.hands().rightmost().fingers().fingerType(Finger.Type.TYPE_INDEX).extended().frontmost().stabilizedTipPosition();
     }
 
     public void setControllerListener(Listener listener) {

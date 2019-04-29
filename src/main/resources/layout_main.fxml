@@ -73,12 +73,15 @@
                         <Font size="18.0" />
                     </font>
                 </Label>
-                <RadioButton fx:id="touchClickModeRadio" layoutY="53.0" mnemonicParsing="false" selected="true" text="Touch screen" textFill="WHITE">
+                <RadioButton id="touchClickModeRadio" fx:id="touchClickModeRadio" layoutY="53.0" mnemonicParsing="false" selected="true" text="Touch screen" textFill="WHITE">
                     <font>
                         <Font size="14.0" />
                     </font>
+               <toggleGroup>
+                  <ToggleGroup fx:id="clickModeGroup" />
+               </toggleGroup>
                 </RadioButton>
-                <RadioButton fx:id="twoFingerClickModeRadio" layoutY="82.0" mnemonicParsing="false" text="Two finger click" textFill="WHITE">
+                <RadioButton id="twoFingerClickModeRadio" fx:id="twoFingerClickModeRadio" layoutY="82.0" mnemonicParsing="false" text="Two finger click" textFill="WHITE" toggleGroup="$clickModeGroup">
                     <font>
                         <Font size="14.0" />
                     </font>
@@ -95,8 +98,11 @@
                     <font>
                         <Font size="14.0" />
                     </font>
+               <toggleGroup>
+                  <ToggleGroup fx:id="mouseModeGroup" />
+               </toggleGroup>
                 </RadioButton>
-                <RadioButton fx:id="mouseModeRadio" layoutY="82.0" mnemonicParsing="false" text="Mouse" textFill="WHITE">
+                <RadioButton fx:id="mouseModeRadio" layoutY="82.0" mnemonicParsing="false" text="Mouse" textFill="WHITE" toggleGroup="$mouseModeGroup">
                     <font>
                         <Font size="14.0" />
                     </font>
@@ -113,8 +119,11 @@
                     <font>
                         <Font size="14.0" />
                     </font>
+               <toggleGroup>
+                  <ToggleGroup fx:id="minimizeGroup" />
+               </toggleGroup>
                 </RadioButton>
-                <RadioButton fx:id="taskBarMinimizeRadio" layoutY="82.0" mnemonicParsing="false" selected="true" text="Task bar" textFill="WHITE">
+                <RadioButton fx:id="taskBarMinimizeRadio" layoutY="82.0" mnemonicParsing="false" selected="true" text="Task bar" textFill="WHITE" toggleGroup="$minimizeGroup">
                     <font>
                         <Font size="14.0" />
                     </font>

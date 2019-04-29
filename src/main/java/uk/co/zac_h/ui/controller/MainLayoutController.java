@@ -1,6 +1,5 @@
 package uk.co.zac_h.ui.controller;
 
-
 import com.leapmotion.leap.Controller;
 import com.leapmotion.leap.Listener;
 import javafx.application.Platform;
@@ -23,12 +22,17 @@ public class MainLayoutController extends Listener implements Initializable, Cal
     @FXML public Label leapStatusText;
     @FXML public Button buttonStartServiceMain;
     @FXML public Slider mouseSensSlider;
+
     @FXML private RadioButton touchClickModeRadio;
     @FXML private RadioButton twoFingerClickModeRadio;
     @FXML private RadioButton touchMouseModeRadio;
     @FXML private RadioButton mouseModeRadio;
     @FXML private RadioButton trayMinimizeRadio;
     @FXML private RadioButton taskBarMinimizeRadio;
+
+    @FXML private ToggleGroup clickModeGroup;
+    @FXML private ToggleGroup mouseModeGroup;
+    @FXML private ToggleGroup minimizeGroup;
 
     private MovementThread movementThread;
     private Thread movement;
@@ -37,27 +41,58 @@ public class MainLayoutController extends Listener implements Initializable, Cal
 
     private LeapController leapController;
 
-
-
     public MainLayoutController() {
         // Required empty public constructor
-
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ToggleGroup clickModeGroup = new ToggleGroup();
-        ToggleGroup mouseModeGroup = new ToggleGroup();
-        ToggleGroup minimizeGroup = new ToggleGroup();
+        touchClickModeRadio.setUserData("touch_click");
+        twoFingerClickModeRadio.setUserData("finger_click");
+        touchMouseModeRadio.setUserData("touch_mouse");
+        mouseModeRadio.setUserData("mouse_mouse");
 
-        touchClickModeRadio.setToggleGroup(clickModeGroup);
-        twoFingerClickModeRadio.setToggleGroup(clickModeGroup);
+        trayMinimizeRadio.setUserData("tray");
+        taskBarMinimizeRadio.setUserData("task_bar");
 
-        touchMouseModeRadio.setToggleGroup(mouseModeGroup);
-        mouseModeRadio.setToggleGroup(mouseModeGroup);
+        clickModeGroup.selectedToggleProperty().addListener((observableValue, o, n) -> {
+            switch (n.getUserData().toString()) {
+                case "touch_click":
+                    System.out.println("Touch");
+                    break;
+                case "finger_click":
+                    System.out.println("Click");
+                    break;
+                default:
+                    break;
+            }
+        });
 
-        trayMinimizeRadio.setToggleGroup(minimizeGroup);
-        taskBarMinimizeRadio.setToggleGroup(minimizeGroup);
+        mouseModeGroup.selectedToggleProperty().addListener((observableValue, o, n) -> {
+            switch (n.getUserData().toString()) {
+                case "touch_mouse":
+                    movementThread.mouseMode = false;
+                    break;
+                case "mouse_mouse":
+                    movementThread.mouseMode = true;
+                    break;
+                default:
+                    break;
+            }
+        });
+
+        minimizeGroup.selectedToggleProperty().addListener((observableValue, o, n) -> {
+            switch (n.getUserData().toString()) {
+                case "tray":
+                    System.out.println("Tray");
+                    break;
+                case "task_bar":
+                    System.out.println("Task Bar");
+                    break;
+                default:
+                    break;
+            }
+        });
 
         closeButton.setOnMouseClicked(event -> System.exit(0));
     }

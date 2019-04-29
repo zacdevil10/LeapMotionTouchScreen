@@ -4,6 +4,7 @@ import com.leapmotion.leap.Vector;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
+import java.awt.geom.Point2D;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,6 +22,7 @@ public class MovementThread implements Runnable {
     private ArrayList<Vector> coordinates = new ArrayList<>();
 
     private Boolean run = true;
+    public Boolean mouseMode = false;
 
     public MovementThread(LeapController leapController) {
         this.leapController = leapController;
@@ -41,12 +43,17 @@ public class MovementThread implements Runnable {
 
                     if (position.magnitude() != 0) {
 
-                        float xScaleFactor = (position.getX() - coordinates.get(0).getX()) / (coordinates.get(1).getX() - coordinates.get(0).getX());
-                        float yScaleFactor = (1 - ((position.getY() - coordinates.get(2).getY()) / (coordinates.get(0).getY() - coordinates.get(2).getY())));
+                        if (mouseMode) {
+                            mouseController.setMousePosition(mousePosition(position));
 
-                        mouseController.setMousePosition(xScaleFactor, yScaleFactor);
+                            if (position.getZ() < 0) {
+                                mouseController.mouseClick(InputEvent.BUTTON1_DOWN_MASK);
+                            }
 
-                        setTouchPlane(coordinates, mouseController, position);
+                        } else {
+                            mouseController.setMousePosition(scale(position));
+                            setTouchPlane(coordinates, mouseController, position);
+                        }
                     }
                 }
             }
@@ -57,8 +64,7 @@ public class MovementThread implements Runnable {
 
     private void setTouchPlane(ArrayList<Vector> coordinates, MouseController mouseController, Vector position) {
         if (position.getZ() < (coordinates.get(0).getZ() + coordinates.get(1).getZ() + coordinates.get(2).getZ()) / 3) {
-            mouseController.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-            mouseController.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+            mouseController.mouseClick(InputEvent.BUTTON1_DOWN_MASK);
         }
     }
 
@@ -103,5 +109,19 @@ public class MovementThread implements Runnable {
         vector.setZ(Float.parseFloat(properties.getProperty(position + "_z")));
 
         return vector;
+    }
+
+    private Point2D.Float scale(Vector position) {
+        float xScaleFactor = (position.getX() - coordinates.get(0).getX()) / (coordinates.get(1).getX() - coordinates.get(0).getX());
+        float yScaleFactor = (1 - ((position.getY() - coordinates.get(2).getY()) / (coordinates.get(0).getY() - coordinates.get(2).getY())));
+
+        return new Point2D.Float(xScaleFactor, yScaleFactor);
+    }
+
+    private Point2D.Float mousePosition(Vector position) {
+        float x = (float) ((position.getX() + (position.getX() / 2)) * 0.01);
+        float y = (float) (1 - ((position.getY()) * 0.01));
+
+        return new Point2D.Float(x, y + 2);
     }
 }

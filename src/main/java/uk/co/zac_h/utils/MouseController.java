@@ -1,6 +1,7 @@
 package uk.co.zac_h.utils;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 
 class MouseController {
 
@@ -28,11 +29,21 @@ class MouseController {
     }
 
     /**
+     * This method clicks a mouse button
+     *
+     * @param button is the button to press
+     */
+    void mouseClick(int button) {
+        robot.mousePress(button);
+        robot.mouseRelease(button);
+    }
+
+    /**
      * This method presses a mouse button
      *
      * @param button is the button to press
      */
-    void mousePress(int button) {
+    void mouseHold(int button) {
         robot.mousePress(button);
     }
 
@@ -48,11 +59,11 @@ class MouseController {
     /**
      * This method calculates the new position of the mouse
      */
-    void setMousePosition(float scaleX, float scaleY) {
+    void setMousePosition(Point2D.Float coordinates) {
         GraphicsDevice graphicsDevice = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 
-        int mouseX = (int) (scaleX * graphicsDevice.getDisplayMode().getWidth());
-        int mouseY = (int) (scaleY * graphicsDevice.getDisplayMode().getHeight());
+        int mouseX = (int) (coordinates.getX() * graphicsDevice.getDisplayMode().getWidth());
+        int mouseY = (int) (coordinates.getY() * graphicsDevice.getDisplayMode().getHeight());
 
         updateMousePosition(mouseX, mouseY);
     }

@@ -2,6 +2,9 @@ package uk.co.zac_h.utils;
 
 import com.leapmotion.leap.*;
 
+import java.awt.geom.Point2D;
+import java.util.List;
+
 public class LeapController {
 
     private final Controller controller;
@@ -28,5 +31,12 @@ public class LeapController {
 
     public void setControllerListener(Listener listener) {
         controller.addListener(listener);
+    }
+
+    Point2D.Float scale(Vector position, List<Vector> coordinates) {
+        float xScaleFactor = (position.getX() - coordinates.get(0).getX()) / (coordinates.get(1).getX() - coordinates.get(0).getX());
+        float yScaleFactor = (1 - ((position.getY() - coordinates.get(2).getY()) / (coordinates.get(0).getY() - coordinates.get(2).getY())));
+
+        return new Point2D.Float(xScaleFactor, yScaleFactor);
     }
 }

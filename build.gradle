@@ -2,7 +2,7 @@ plugins {
     id 'java'
 }
 
-group 'uk.co.zac_h-h.leaptouch'
+group 'uk.co.zac_h.leaptouch'
 version '0.0.1'
 
 sourceCompatibility = 1.8
